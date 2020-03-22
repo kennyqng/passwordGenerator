@@ -11,7 +11,12 @@ var special = "!@#$%^&*()-+<>";
 var buildpw = "";
 
 function criteria(){
-
+  
+  // requesting user to choose password length at least 8 characters and no more than 128 characters
+  while(pwLength < 8 || pwLength > 128){
+    pwLength = prompt ("Please choose password length from 8 to 128 characters.");
+  }
+  // requesting criteria through prompt to choose lowercase, uppercase, numeric, and/or special characters
   while (chars == ""){
     var lowerSelected = confirm("Password criteria: lowercase?");
     if (lowerSelected == true){
@@ -29,14 +34,17 @@ function criteria(){
     if (specialSelected == true){
       chars += special;
     }
+    // input should be validated and at least one character type should be selected
     if (chars == ""){alert("You must select at least 1 criteria.");}
   }
 }
 
-// Write password to the #password input
+// generate password from criteria created
 function generatePassword() {
   
+  // calls for criteria
   criteria();
+  // building password
   for (var x = 0; x < (pwLength); x++)
   {
     var i = Math.floor(Math.random() * chars.length);
@@ -45,18 +53,19 @@ function generatePassword() {
   
   return buildpw;
 }
+
+// Write password to the #password input
 function writePassword() {
+  // resets password
   buildpw = "";
+
   var password = generatePassword();
+  // password is written to the page
   var passwordText = document.querySelector("#password");
   
   
   passwordText.value = password;
   
-}
-
-while(pwLength < 8 || pwLength > 128){
-  pwLength = prompt ("Please choose password length from 8 to 128 characters.");
 }
 
 // Add event listener to generate button
